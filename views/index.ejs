@@ -1,0 +1,83 @@
+<%- include header.ejs %>
+<body>
+<div id="mapCon" class="mapCon"></div>
+<div id="container" class="container">
+    <!--------------------------- 1.工具栏 -->
+    <div class="toolBar">
+        <ul class="clearfix">
+            <li id="switch" data-switch-value="off">&#xe6db;</li>
+            <li>实时路况</li>
+            <li>报告路况</li>
+            <li>查看公告</li>
+            <li>事件查询</li>
+            <li id="toolA">工具箱
+                <ul>
+                    <li>测距离</li>
+                    <li>测面积</li>
+                    <li>导出图</li>
+                </ul>
+            </li>
+            <li id="toolB">管理员工具
+                <ul>
+                    <li>视频监控</li>
+                    <li>路况信息</li>
+                    <li>发布公告</li>
+                    <li>事件添加</li>
+                    <li>事件更新</li>
+                    <li>文档目录</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!--------------------------- 2.切换图层 -->
+    <input class="changeLayer styleA" type="button" value="&#xe622;" />
+    <!--------------------------- 3.经纬度 -->
+    <div class="coordinate"></div>
+    <!--------------------------- 4.用户 -->
+    <% if(locals.islogin){ %>
+
+    <% }else{ %>
+        <div id="userBox" class="userBox"><img src="img/管理员-男.png" alt="">
+            <aside class="loginBox">登录</aside>
+        </div>
+    <% } %>
+
+    <!--------------------------- 5.注册 -->
+    <form class="formReg" role="form" action="/reg" method="post">
+        <img src="img/插画/地球.png" />
+        <ul>
+            <!-- TODO 输入栏 -->
+            <li class="username"><input type="text" id="username" name="username" placeholder="输入用户名" required>
+            </li>
+            <li class="password1"><input type="password" id="password" name="password"
+                                         placeholder="输入密码（4-16位任意字符，区分大小写）" required>
+            </li>
+            <li class="password2"><input type="password" id="password2" name="password2" placeholder="再次输入密码"
+                                         required></li>
+            <li class="email"><input type="email" id="email" name="email" placeholder="请输入邮箱" required></li>
+            <!-- TODO 按钮 -->
+            <li class="finish"><button type="submit">完成注册</button></li>
+            <li class="other"><a href="javascript:;">马上登录</a><a href="javascript:;">不想注册</a></li>
+            <!-- TODO 我不清楚它在原ejs文件中的具体作用，由于和界面无关，所以注释掉了 -->
+<!--            <li><button type="reset">重置</button></li>-->
+        </ul>
+
+    </form>
+    <!--------------------------- 6.登录 -->
+    <form class="formLogin" role="form" action="/login" method="post">
+        <img src="img/插画/地球.png" />
+        <ul>
+            <!-- TODO 输入栏 -->
+            <li class="username"><input type="text" id="username" name="username" placeholder="输入用户名" required>
+            </li>
+            <li class="password"><input type="password" id="password" name="password" placeholder="输入密码" required>
+            </li>
+            <!-- TODO 按钮 -->
+            <li class="finish"><button type="submit">登录</button></li>
+            <li class="other"><a href="javascript:;">马上注册</a><a href="javascript:;">不想登录</a></li>
+            <li class="other"><%= promptinfo %></li>
+        </ul>
+    </form>
+</div>
+<script src="js/index.js"></script>
+<%- include mapfooter.ejs %>

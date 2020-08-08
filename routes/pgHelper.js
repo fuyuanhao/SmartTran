@@ -258,6 +258,57 @@ function queryUserinfo(req, res, next){
     }
 }
 
+function baogao(req, res){
+    keepLogin(req, res);
+    db.none('INSERT INTO gg_event(event_type, event_addr, event_mark, event_time, event_describe) VALUES($1,$2,$3,$4,$5)', [req.body.event_type, req.body.event_addr, req.body. event_mark, req.body.event_time, req.body.event_describe])
+        .then(()=>{
+            db.any("SELECT * FROM gg_event WHERE event_type = $1", req.body.event_type)
+                .then((result)=> {
+                    if(result[0])
+                        //res.render('road-info.ejs',{title:'Road Situation', promptinfo: '路况信息报告提交成功'});
+                        res.redirect('/');
+                    else
+                        res.render('/road-info.ejs',{title:'Road Situation', promptinfo: '路况信息报告提交失败'});
+                })
+        })
+        .catch((error)=> {
+            console.log(error);
+        });
+}
+
+function check_notice(req,res,next){
+    //keepLogin(req,res);
+    db.any("SELECT * FROM gg_notice WHERE notice_time IN (SELECT max(notice_time) FROM gg_notice) ")
+        .then((result)=> {
+            if(result[0] === undefined){
+                promptinfo="没有公告信息";
+            }else{
+                promptinfo = "Welcome to 公告信息界面!";
+                res.render('notice.ejs', {title: '公告信息', test: res.locals.islogin, promptinfo: promptinfo, datas: result});
+            }
+        })
+        .catch((err)=>{
+            return next(err);
+        });
+}
+
+function toBaogaoinfoManagement(req, res, next){
+    keepLogin(req, res);
+    db.any("SELECT * FROM gg_event")
+        .then((result)=> {
+            if(result[0] === undefined){
+                promptinfo="没有报告信息";
+                res.render('road-info.ejs', {title: '路况报告信息', test: res.locals.islogin, promptinfo: promptinfo, datas: result});
+            }else{
+                promptinfo = "Welcome to 报告信息界面!";
+                res.render('road-info.ejs', {title: '路况报告信息', test: res.locals.islogin, promptinfo: promptinfo, datas: result});
+            }
+        })
+        .catch((err)=>{
+            return next(err);
+        });
+}
+
 function keepLogin(req, res){
     if(req.cookies.islogin){
         req.session.islogin=req.cookies.islogin;
@@ -270,6 +321,7 @@ function keepLogin(req, res){
 module.exports = {
     login : login,
     register : register,
+    baogao : baogao,
     toUserinfoManagement : toUserinfoManagement,
     addUserinfoGET: addUserinfoGET,
     addUserinfoPOST: addUserinfoPOST,
@@ -277,5 +329,7 @@ module.exports = {
     updateUserinfoGET : updateUserinfoGET,
     updateUserinfoPOST : updateUserinfoPOST,
     queryUserinfo : queryUserinfo,
+    toBaogaoinfoManagement: toBaogaoinfoManagement,
+    check_notice:check_notice,
     keepLogin : keepLogin
 };

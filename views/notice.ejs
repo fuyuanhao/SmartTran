@@ -1,0 +1,38 @@
+<%- include header.ejs %>
+
+<body>
+<table>
+    <caption><i>最新公告</i></caption>
+    <thead>
+    <tr>
+        <td>发布时间</td>
+    </tr>
+    </thead>
+    <tbody>
+    <% if(datas.length){ %>
+        <% datas.forEach(function(notice){ %>
+            <tr>
+                <td><%= notice.notice_time %></td>
+            </tr>
+        <% }) %>
+    <% } %>
+    <thead>
+    <tr>
+        <td>公告内容</td>
+        <!--<td>发布时间</td>-->
+    </tr>
+    </thead>
+    <tbody>
+    <% if(datas.length){ %>
+            <% datas.forEach(function(notice){ %>
+            <tr>
+                <td><%= notice.notice_content %></td>
+            </tr>
+            <% }) %>
+    <% } %>
+    </tbody>
+
+    </tbody>
+</table>
+
+<%- include footer.ejs %>

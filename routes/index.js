@@ -24,9 +24,9 @@ router.route('/login')
     .post(db.login);
 
 router.get('/logout', function(req, res) {
-  res.clearCookie('islogin');
-  req.session.destroy();
-  res.redirect('/');
+      res.clearCookie('islogin');
+      req.session.destroy();
+      res.redirect('/');
 });
 
 router.route('/reg')
@@ -34,5 +34,7 @@ router.route('/reg')
       res.render('reg.ejs',{title:'Sign Up', promptinfo: ' '});
     })
     .post(db.register);
+
+router.get('/notice', db.check_notice);
 
 module.exports = router;

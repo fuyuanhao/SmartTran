@@ -1,6 +1,6 @@
 var map;
 var layerArr;
-// 地图加载
+// TODO 地图加载
 (function () {
     var layer1 = new Zondy.Map.TianDiTu({
         layerType: Zondy.Enum.Map.TiandituType.VEC_IGS,
@@ -52,7 +52,7 @@ var layerArr;
     });
 })();
 
-// 图层切换
+// TODO 图层切换
 (function () {
     document.querySelector(".changeLayer").onclick = function () {
         // layer1.ol_uid.ol_uid  1
@@ -77,7 +77,7 @@ var layerArr;
     }
 })();
 
-// 复位, space触发
+// TODO 复位, space触发
 (function () {
     document.addEventListener("keyup", function (e) {
         if (e.key !== " ") return;
@@ -87,8 +87,15 @@ var layerArr;
         view.setZoom(14);
     })
 })();
+(function () {
+    document.addEventListener("keyup", function (e) {
+        if (e.key !== "q") return;
 
-// 工具栏特效
+        window.location.href="/logout";
+    })
+})();
+
+// TODO 工具栏特效
 (function () {
     // 水平收缩工具栏
     var elem = document.getElementById("switch");
@@ -126,5 +133,45 @@ var layerArr;
     toolB.addEventListener("mouseout", () => {
         toolBSon.style.display = "none";
     }, false);
+})();
+
+// TODO 使用中 特效
+(function () {
+    var container = document.getElementById("container");
+    container.addEventListener("click", inUseing, false);
+
+    function inUseing(e) {
+        if (!e.target.lastElementChild) return;
+        if (e.target.lastElementChild.nodeName != "IMG") return;
+
+        var img = e.target.lastElementChild;
+        img.dataset.dataSwitch = img.dataset.dataSwitch == "on" ? "off" : "on";
+        img.style.display = img.dataset.dataSwitch == "on" ? "inline-block" : "none";
+    }
+})();
+
+// TODO 工具
+(function () {
+    // 报告路况
+    var traReportBtn = document.getElementById("traReportBtn");
+    var traReportBox = document.getElementById("traReportBox");
+
+    traReportBtn.onclick = () => {
+        traReportBox.dataset.switchValue = traReportBox.dataset.switchValue == "on" ? "off" : "on";
+        traReportBox.style.display = traReportBox.dataset.switchValue == "on" ? "block" : "none";
+    };
+
+    // 路况信息
+    var traInfoBtn = document.getElementById("traInfoBtn");
+    traInfoBtn.onclick = () => {
+        window.open("/road");
+    };
+    // 查看公告
+    var checkAfficheBtn = document.getElementById("checkAfficheBtn");
+    checkAfficheBtn.onclick = () => {
+        window.open("/notice");
+    }
+
+
 })();
 

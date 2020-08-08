@@ -2,25 +2,25 @@
 <body>
 <div id="mapCon" class="mapCon"></div>
 <div id="container" class="container">
-    <!--------------------------- 1.工具栏 -->
+    <!--------------------------- @part 工具栏 -->
     <div class="toolBar">
         <ul class="clearfix">
             <li id="switch" data-switch-value="off">&#xe6db;</li>
             <li>实时路况</li>
-            <li>报告路况</li>
-            <li>查看公告</li>
+            <li id="traReportBtn">报告路况<img src="img/using.png" /></li>
+            <li id="checkAfficheBtn">查看公告</li>
             <li>事件查询</li>
             <li id="toolA">工具箱
                 <ul>
-                    <li>测距离</li>
-                    <li>测面积</li>
+                    <li>测距离<img src="img/using.png" /></li>
+                    <li>测面积<img src="img/using.png" /></li>
                     <li>导出图</li>
                 </ul>
             </li>
             <li id="toolB">管理员工具
                 <ul>
                     <li>视频监控</li>
-                    <li>路况信息</li>
+                    <li id="traInfoBtn">路况信息</li>
                     <li>发布公告</li>
                     <li>事件添加</li>
                     <li>事件更新</li>
@@ -29,22 +29,50 @@
             </li>
         </ul>
     </div>
+    <!--------------------------- @part 报告路况 -->
+    <form class="formTra" id="traReportBox" method="post" action="/road">
+        <ul>
+            <li>
+                <label for="event_type">事件类型</label><input type="text" id="event_type" name="event_type"  placeholder="..." class="form-control" required/>
+            </li>
+            <li>
+                <label for="event_addr">事件地址</label><input type="text" id="event_addr" name="event_addr"  placeholder="..." class="form-control" required/>
+            </li>
+            <li>
+                <label for="event_mark">建筑标注</label><input type="text" id="event_mark" name="event_mark"  placeholder="..." class="form-control" required/>
+            </li>
+            <li>
+                <label for="event_time">发送时间</label><input type="datetime-local" id="event_time" name="event_time"  placeholder="..." class="form-control" required/>
+            </li>
+            <li>
+<!--                <label for="event_describe">事件描述</label><input type="text" id="event_describe" name="event_describe"  placeholder="..." class="form-control" required/>-->
+                <textarea id="event_describe" name="event_describe" class="form-control" placeholder="输入事件描述"></textarea>
+            </li>
+            <!--            <li>
+                <label for="event_status">事件状态</label><input type="text" readOnly="readOnly" value ="0" id="event_status" name="event_status"  placeholder="未处理" class="form-control" required/>
+            </li>-->
+            <button type="submit">提交</button>
+        </ul>
+    </form>
+
     <!--------------------------- 2.切换图层 -->
     <input class="changeLayer styleA" type="button" value="&#xe622;" />
     <!--------------------------- 3.经纬度 -->
     <div class="coordinate"></div>
     <!--------------------------- 4.用户 -->
     <% if(locals.islogin){ %>
-
+        <div id="userBox" class="userBox"><img src="img/admin-men.png" alt="">
+            <aside class="loginBox">您已登录</aside>
+        </div>
     <% }else{ %>
-        <div id="userBox" class="userBox"><img src="img/管理员-男.png" alt="">
+        <div id="userBox" class="userBox"><img src="img/public-men.png" alt="">
             <aside class="loginBox">登录</aside>
         </div>
     <% } %>
 
     <!--------------------------- 5.注册 -->
     <form class="formReg" role="form" action="/reg" method="post">
-        <img src="img/插画/地球.png" />
+        <img src="img/pic/earth.png" />
         <ul>
             <!-- TODO 输入栏 -->
             <li class="username"><input type="text" id="username" name="username" placeholder="输入用户名" required>
@@ -57,7 +85,7 @@
             <li class="email"><input type="email" id="email" name="email" placeholder="请输入邮箱" required></li>
             <!-- TODO 按钮 -->
             <li class="finish"><button type="submit">完成注册</button></li>
-            <li class="other"><a href="javascript:;">马上登录</a><a href="javascript:;">不想注册</a></li>
+            <li class="other"><a href="javascript:;">马上登录</a><a href="javascript:;">暂不注册</a></li>
             <!-- TODO 我不清楚它在原ejs文件中的具体作用，由于和界面无关，所以注释掉了 -->
 <!--            <li><button type="reset">重置</button></li>-->
         </ul>
@@ -65,7 +93,7 @@
     </form>
     <!--------------------------- 6.登录 -->
     <form class="formLogin" role="form" action="/login" method="post">
-        <img src="img/插画/地球.png" />
+        <img src="img/pic/earth.png" />
         <ul>
             <!-- TODO 输入栏 -->
             <li class="username"><input type="text" id="username" name="username" placeholder="输入用户名" required>
@@ -74,7 +102,7 @@
             </li>
             <!-- TODO 按钮 -->
             <li class="finish"><button type="submit">登录</button></li>
-            <li class="other"><a href="javascript:;">马上注册</a><a href="javascript:;">不想登录</a></li>
+            <li class="other"><a href="javascript:;">马上注册</a><a href="javascript:;">暂不登录</a></li>
             <li class="other"><%= promptinfo %></li>
         </ul>
     </form>

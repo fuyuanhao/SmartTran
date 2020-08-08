@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<body >
+<!-- 如果是登录状态，就进入信息查询页面 -->
+<div align="center">
+    <h3>审核数据规则：</h3>
+    <p>事件状态分别为0，1，2。</p>
+    <p>0表示未处理，1、2表示已处理，1代表忽略，2代表通过</p>
+    <p>当事件处理状态修改为2时，则点击添加要素功能跳转到事件要素添加页面进行实时要素添加</p>
+</div>
+<br>
+<% if(locals.islogin){%>
+    <!-- 用户信息显示的表单 -->
+    <div class="container" align="center" >
+        <span id="spanFirstt">第一页</span> <span id="spanPret">上一页</span> <span id="spanNextt">下一页</span> <span id="spanLastt">最后一页</span> 第<span id="spanPageNumt"></span>页/共<span id="spanTotalPaget"></span>页
+        <table  id="tablelsw" border="1px solid #202064" cellpadding="5" cellspacing="1" width="1000">
+            <thead>
+            <tr bgcolor="#999999">
+                <th>事件编号</th>
+                <th>事件类型</th>
+                <th>事件地址</th>
+                <th>建筑标注</th>
+                <th>发送时间</th>
+                <th>事件描述</th>
+                <th>处理状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody align="center">
+            <% if(datas.length){ %>
+                <% datas.forEach(function(baogao_info){ %>
+                    <tr bgcolor="#f5f5f5">
+
+                        <td><%= baogao_info.event_id %></td>
+                        <td><%= baogao_info.event_type %></td>
+                        <td><%= baogao_info.event_addr %></td>
+                        <td><%= baogao_info.event_mark %></td>
+                        <td><%= baogao_info.event_time %></td>
+                        <td><%= baogao_info.event_describe %></td>
+                        <td>
+                            <select>
+                                <option><%= baogao_info.event_status %></option>
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </td>
+                        <td>
+                            <div class="btn-group operation">
+                                <button type="submit" class="btn-block" onclick="alert('保存成功！')">保存</button>
+                                <button type="submit" class="btn-block" >添加事件要素</button>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } %>
+            </tbody>
+        </table>
+        <span id="spanFirst">第一页</span>
+        <span id="spanPre">上一页</span>
+        <span id="spanNext">下一页</span>
+        <span id="spanLast">最后一页</span>
+        第<span id="spanPageNum"></span>页/共<span id="spanTotalPage"></span>页
+    </div>
+<% }else{ %>
+    <!-- 否则，提示重新登录 -->
+    <div id="myAlert" class="alert alert-warning">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>警告！</strong>登录已超时，请登录后访问。
+    </div>
+<% } %>
+<%- include footer.ejs %>
+
+<!--功能代码部分--------------------------------------------------!-->
+<script>
+
+    // JavaScript Document By lishewen
+    var theTable = document.getElementById("tablelsw");
+    var totalPage = document.getElementById("spanTotalPage");
+    var pageNum = document.getElementById("spanPageNum");
+
+    var spanPre = document.getElementById("spanPre");
+    var spanNext = document.getElementById("spanNext");
+    var spanFirst = document.getElementById("spanFirst");
+    var spanLast = document.getElementById("spanLast");
+
+    var totalPaget = document.getElementById("spanTotalPaget");
+    var pageNumt = document.getElementById("spanPageNumt");
+
+    var spanPret = document.getElementById("spanPret");
+    var spanNextt = document.getElementById("spanNextt");
+    var spanFirstt = document.getElementById("spanFirstt");
+    var spanLastt = document.getElementById("spanLastt");
+
+    var numberRowsInTable = theTable.rows.length;
+    var pageSize = 4;
+    var page = 1;
+
+    //下一页
+    function next(){
+
+        hideTable();
+
+        currentRow = pageSize * page;
+        maxRow = currentRow + pageSize;
+        if ( maxRow > numberRowsInTable ) maxRow = numberRowsInTable;
+        for ( var i = currentRow; i< maxRow; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+        page++;
+
+        if ( maxRow == numberRowsInTable ) { nextText(); lastText(); }
+        showPage();
+        preLink();
+        firstLink();
+    }
+
+    //上一页
+    function pre(){
+
+        hideTable();
+
+        page--;
+
+        currentRow = pageSize * page;
+        maxRow = currentRow - pageSize;
+        if ( currentRow > numberRowsInTable ) currentRow = numberRowsInTable;
+        for ( var i = maxRow; i< currentRow; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+
+
+        if ( maxRow == 0 ){ preText(); firstText(); }
+        showPage();
+        nextLink();
+        lastLink();
+    }
+
+    //第一页
+    function first(){
+        hideTable();
+        page = 1;
+        for ( var i = 0; i<pageSize; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+        showPage();
+
+        preText();
+        nextLink();
+        lastLink();
+    }
+
+    //最后一页
+    function last(){
+        hideTable();
+        page = pageCount();
+        currentRow = pageSize * (page - 1);
+        for ( var i = currentRow; i<numberRowsInTable; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+        showPage();
+
+        preLink();
+        nextText();
+        firstLink();
+    }
+
+    function hideTable(){
+        for ( var i = 0; i<numberRowsInTable; i++ ){
+            theTable.rows[i].style.display = 'none';
+        }
+    }
+
+    function showPage(){
+        pageNum.innerHTML = page;
+        pageNumt.innerHTML = page;
+    }
+
+    //总共页数
+    function pageCount(){
+        var count = 0;
+        if ( numberRowsInTable%pageSize != 0 ) count = 1;
+        return parseInt(numberRowsInTable/pageSize) + count;
+    }
+
+    //显示链接
+    function preLink(){ spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; spanPret.innerHTML = "<a href='javascript:pre();'>上一页</a>";}
+    function preText(){ spanPre.innerHTML = "上一页"; spanPret.innerHTML = "上一页"; }
+
+    function nextLink(){ spanNext.innerHTML = "<a href='javascript:next();'>下一页</a>"; spanNextt.innerHTML = "<a href='javascript:next();'>下一页</a>";}
+    function nextText(){ spanNext.innerHTML = "下一页"; spanNextt.innerHTML = "下一页";}
+
+    function firstLink(){ spanFirst.innerHTML = "<a href='javascript:first();'>第一页</a>"; spanFirstt.innerHTML = "<a href='javascript:first();'>第一页</a>";}
+    function firstText(){ spanFirst.innerHTML = "第一页"; spanFirstt.innerHTML = "第一页";}
+
+    function lastLink(){ spanLast.innerHTML = "<a href='javascript:last();'>最后一页</a>"; spanLastt.innerHTML = "<a href='javascript:last();'>最后一页</a>";}
+    function lastText(){ spanLast.innerHTML = "最后一页"; spanLastt.innerHTML = "最后一页";}
+
+    //隐藏表格
+    function hide(){
+        for ( var i = pageSize; i<numberRowsInTable; i++ ){
+            theTable.rows[i].style.display = 'none';
+        }
+
+        totalPage.innerHTML = pageCount();
+        pageNum.innerHTML = '1';
+
+        totalPaget.innerHTML = pageCount();
+        pageNumt.innerHTML = '1';
+
+        nextLink();
+        lastLink();
+    }
+
+    hide();
+</script>
+

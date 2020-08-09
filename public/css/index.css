@@ -134,25 +134,30 @@
 /* 一级工具 */
 /* 一级工具 */
 /* 一级工具 */
+/* 水平收缩工具栏，启用前要删除ul里重复的css
 .container>.toolBar {
     position: fixed;
     top: 17px;
     right: 78px;
-    height: 400px;
+    z-index: 1;
+    height: 350px;
     overflow: hidden;
-}
+} */
 
 .container>.toolBar>ul {
-    box-shadow: -2px -2px 2px 0 rgba(0, 0, 0, .3);
-    /* margin-right: calc(24px - 630px); */
-    transition: margin .4s ease-in-out;
+    position: fixed;
+    z-index: 1;
+    top: 17px;
+    right: 78px;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, .3);
 }
 
 .container>.toolBar>ul>li {
     position: relative;
     float: left;
     padding: 0 1em;
-    background-color: rgba(0, 0, 0, .5);
     color: #ddd;
     font-family: "iconfont" !important;
     line-height: 45px;
@@ -161,8 +166,6 @@
 
 .container>.toolBar>ul>li:first-child {
     padding: 0;
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
     font-size: 2em;
 }
 
@@ -205,20 +208,27 @@
     content: "\ebc3";
 }
 
-/* 二级工具 */
-/* 二级工具 */
-/* 二级工具 */
-/* 1 */
-/* 1 */
-.container>.toolBar>ul>li:nth-child(6)>ul {
-    display: none;
+/* 二级菜单 */
+/* 二级菜单 */
+/* 2.实时路况 */
+/* 5.事件查询 */
+/* 6.工具箱 */
+/* 6.管理员工具箱 */
+.container>.toolBar>ul>li:nth-child(2)>ul,
+.container>.toolBar>ul>li:nth-child(5)>ul,
+.container>.toolBar>ul>li:nth-child(6)>ul,
+.container>.toolBar>ul>li:nth-child(7)>ul {
     position: absolute;
     top: 100%;
     left: 0;
     width: 100%;
+    visibility: hidden;
 }
 
-.container>.toolBar>ul>li:nth-child(6)>ul>li {
+.container>.toolBar>ul>li:nth-child(2)>ul>li,
+.container>.toolBar>ul>li:nth-child(5)>ul>li,
+.container>.toolBar>ul>li:nth-child(6)>ul>li,
+.container>.toolBar>ul>li:nth-child(7)>ul>li {
     padding: 0 1em;
     background-color: rgba(0, 0, 0, .5);
     color: #ddd;
@@ -227,15 +237,49 @@
     cursor: pointer;
 }
 
-.container>.toolBar>ul>li:nth-child(6)>ul>li:hover {
+.container>.toolBar>ul>li:nth-child(2)>ul>li:hover,
+.container>.toolBar>ul>li:nth-child(5)>ul>li:hover,
+.container>.toolBar>ul>li:nth-child(6)>ul>li:hover,
+.container>.toolBar>ul>li:nth-child(7)>ul>li:hover {
     color: #fff;
     background-color: rgba(0, 0, 0, .8);
 }
 
-.container>.toolBar>ul>li:nth-child(6)>ul>li::before {
+.container>.toolBar>ul>li:nth-child(2)>ul>li::before,
+.container>.toolBar>ul>li:nth-child(5)>ul>li::before,
+.container>.toolBar>ul>li:nth-child(6)>ul>li::before,
+.container>.toolBar>ul>li:nth-child(7)>ul>li::before {
     float: left;
     margin-right: 5px;
     font-size: 2em;
+}
+
+.container>.toolBar>ul>li:nth-child(2)>ul>li:nth-child(1)::before {
+    content: "\e704";
+}
+
+.container>.toolBar>ul>li:nth-child(2)>ul>li:nth-child(2)::before {
+    content: "\e662";
+}
+
+.container>.toolBar>ul>li:nth-child(5)>ul>li:nth-child(1)::before {
+    content: "\e831";
+}
+
+.container>.toolBar>ul>li:nth-child(5)>ul>li:nth-child(2)::before {
+    content: "\e612";
+}
+
+.container>.toolBar>ul>li:nth-child(5)>ul>li:nth-child(3)::before {
+    content: "\e78d";
+}
+
+.container>.toolBar>ul>li:nth-child(5)>ul>li:nth-child(4)::before {
+    content: "\e6ea";
+}
+
+.container>.toolBar>ul>li:nth-child(5)>ul>li:nth-child(5)::before {
+    content: "\e634";
 }
 
 .container>.toolBar>ul>li:nth-child(6)>ul>li:nth-child(1)::before {
@@ -247,37 +291,11 @@
 }
 
 .container>.toolBar>ul>li:nth-child(6)>ul>li:nth-child(3)::before {
+    content: "\e78d";
+}
+
+.container>.toolBar>ul>li:nth-child(6)>ul>li:nth-child(4)::before {
     content: "\e6a8";
-}
-
-/* 2 */
-/* 2 */
-.container>.toolBar>ul>li:nth-child(7)>ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-}
-
-.container>.toolBar>ul>li:nth-child(7)>ul>li {
-    padding: 0 1em;
-    background-color: rgba(0, 0, 0, .5);
-    color: #ddd;
-    font-family: "iconfont" !important;
-    line-height: 45px;
-    cursor: pointer;
-}
-
-.container>.toolBar>ul>li:nth-child(7)>ul>li:hover {
-    color: #fff;
-    background-color: rgba(0, 0, 0, .8);
-}
-
-.container>.toolBar>ul>li:nth-child(7)>ul>li::before {
-    float: left;
-    margin-right: 5px;
-    font-size: 2em;
 }
 
 .container>.toolBar>ul>li:nth-child(7)>ul>li:nth-child(1)::before {
@@ -301,8 +319,17 @@
 }
 
 .container>.toolBar>ul>li:nth-child(7)>ul>li:nth-child(6)::before {
-    content: "\e6a2";
+    content: "\e626";
 }
+
+.container>.toolBar>ul>li:nth-child(7)>ul>li:nth-child(7)::before {
+    content: "\e78d";
+}
+
+.container>.toolBar>ul>li:nth-child(7)>ul>li:nth-child(8)::before {
+    content: "\e7b1";
+}
+
 
 /* 使用中 特效 */
 .container>.toolBar>ul>li>ul>li {
@@ -316,6 +343,52 @@
     left: 0;
     height: 50%;
 }
+
+/*
+* 模糊查询
+* -----------------------------------------------------------------------------------
+*/
+.container>.misSeaBox {
+    display: none;
+    position: fixed;
+    top: 17px;
+    left: 20px;
+    width: 360px;
+    height: 45px;
+    padding: 10px 2em;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, .3);
+}
+
+.container>.misSeaBox>input {
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    /* background-color: #fff; */
+    color: #ddd;
+    line-height: 25px;
+    vertical-align: bottom;
+}
+
+.container>.misSeaBox>input[type="text"] {
+    width: 92%;
+    text-indent: .5em;
+}
+
+.container>.misSeaBox>input[type="button"] {
+    width: 8%;
+    font-family: "iconfont" !important;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.container>.misSeaBox>input[type="button"]:active {
+    color: #fff;
+}
+
 
 /*
 * 路况报告
@@ -416,8 +489,163 @@
     background-color: #ccc;
 }
 
+/*
+* 事件更新表
+* -----------------------------------------------------------------------------------
+*/
+.container>.formUpEve {
+    display: none;
+    position: fixed;
+    top: 100px;
+    left: calc(10% + 30px);
+    width: 15%;
+    padding: 35px 2em;
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .3);
+}
 
+.container>.formUpEve>h3 {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
 
+.container>.formUpEve>ul>li {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #cacbcc;
+}
+
+.container>.formUpEve>ul>li:last-child,
+.container>.formUpEve>ul>li:nth-child(8) {
+    margin-top: 20px;
+    border-bottom: none;
+}
+
+.container>.formUpEve>ul>li>label {
+    display: inline-block;
+    width: 25%;
+    padding: 0;
+    margin: 0;
+    line-height: 24px;
+    vertical-align: bottom;
+}
+
+.container>.formUpEve>ul>li>input {
+    width: 75%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    line-height: 24px;
+    vertical-align: bottom;
+}
+
+.container>.formUpEve>ul>li:nth-child(8)>select {
+    height: 24px;
+    padding: 0;
+    margin: 0;
+    border-color: #cacbcc;
+    outline: none;
+    line-height: 24px;
+    vertical-align: middle;
+}
+
+.container>.formUpEve>ul>li>button {
+    float: left;
+    width: 3.5em;
+    height: 25px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    background-color: #0099ff;
+    color: #fff;
+    line-height: 24px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .5);
+    cursor: pointer;
+}
+
+.container>.formUpEve>ul>li>button:last-child {
+    float: right;
+    background-color: #777;
+}
+
+.container>.formUpEve>ul>li>button:active {
+    background-color: #abddff;
+}
+
+.container>.formUpEve>ul>li>button:last-child:active {
+    background-color: #ccc;
+}
+
+/*
+* 文档目录
+* -----------------------------------------------------------------------------------
+*/
+.container>.formDoc {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 10%;
+    padding: 50px 1%;
+    background-color: rgba(0, 0, 0, .5);
+    margin-left: -10%;
+    transition: margin .2s ease-in-out;
+}
+
+.container>.formDoc>ul>li {
+    margin-bottom: 10px;
+}
+
+.container>.formDoc>ul>li:nth-child(1) {
+    margin-bottom: 15px;
+    color: #ddd;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+.container>.formDoc>ul>li>* {
+    padding: 0;
+    margin: 0;
+    margin-right: .5em;
+    color: #ddd;
+    font-size: 14px;
+    line-height: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.container>.formDoc>.formDocBtn {
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    width: 30px;
+    height: 60px;
+    border-top-right-radius: 999em;
+    border-bottom-right-radius: 999em;
+    background-color: rgba(0, 0, 0, .5);
+    color: #ddd;
+    font-family: "iconfont" !important;
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 60px;
+    transform: translate(100%, -50%);
+    cursor: pointer;
+}
+
+.container>.formDoc:hover,
+.container>.formDoc:hover>.formDocBtn,
+.container>.formDoc>.formDocBtn:hover,
+.container>.formDoc:nth-child(1):hover {
+    color: #fff;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.container>.formDoc:hover>ul>li>* {
+    color: #fff;
+}
 
 /*
 * 注册 登录
@@ -450,9 +678,9 @@
 .container>.formReg>img,
 .container>.formLogin>img {
     position: absolute;
+    z-index: 9;
     bottom: calc(18% + 500px - 100px);
     right: 35%;
-    z-index: 1;
     width: 240px;
 }
 
@@ -587,5 +815,114 @@
     color: #0099ff;
 }
 
-/* 登录 的btn：*/
-/* 登录 的btn：*/
+/* 热力图
+* ---------------------------------------------------------------------------------------------------- 
+*/
+.container>.thermodynamicChart>div#hotchartContral {
+    display: none;
+}
+
+.container>.thermodynamicChart>div>input[type="range"] {
+    -webkit-appearance: none;
+    background-color: #000;
+    background-size: 0 100%;
+    width: 300px;
+    height: 3px;
+    border: none;
+    border-radius: 999em;
+    outline: none;
+    box-shadow: 0 0 1px 0 #000;
+}
+
+.container>.thermodynamicChart>div>input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    border-radius: 999em;
+    box-shadow: 0 0 4px 2px #fff;
+}
+
+.container>.thermodynamicChart>div>input:nth-child(1),
+.container>.thermodynamicChart>div>input:nth-child(2) {
+    position: fixed;
+    left: 50%;
+    bottom: 40px;
+    transform: translateX(-50%);
+}
+
+.container>.thermodynamicChart>div>input:nth-child(2) {
+    bottom: 20px;
+}
+
+.container>.thermodynamicChart>.echartsTest {
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 689px;
+    height: 800px;
+    align-items: center;
+    border-radius: 3px;
+    /* background-color: rgba(255, 255, 255, .5); */
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, .8);
+}
+
+
+
+
+/* popup弹窗的专属CSS 
+* ---------------------------------------------------------------------------------------------------- 
+*/
+.ol-popup {
+    position: absolute;
+    bottom: 25px;
+    left: -25px;
+    min-width: 12em;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+}
+
+.ol-popup:after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #fff;
+    pointer-events: none;
+}
+
+/* closer元素 */
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+
+.ol-popup-closer:hover {
+    color: #f00;
+}
+
+.ol-popup-closer:after {
+    content: "×";
+}
+
+/* content元素 */
+#popup-content {
+    font-size: 14px;
+    font-family: "微软雅黑";
+}
+
+/* content元素 -> title元素 */
+#popup-content .markerInfo {
+    font-weight: bold;
+}

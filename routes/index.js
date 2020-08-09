@@ -13,7 +13,7 @@ let db = require('./pgHelper.js');
 
 router.get('/', function(req, res) {
     db.keepLogin(req, res);
-    res.render('index.ejs', { title: 'HOME',test: res.locals.islogin, promptinfo: ''});
+    res.render('index.ejs', { title: '光谷智慧交通',test: res.locals.islogin, promptinfo: ''});
 });
 
 router.route('/login')

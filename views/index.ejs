@@ -6,29 +6,81 @@
     <div class="toolBar">
         <ul class="clearfix">
             <li id="switch" data-switch-value="off">&#xe6db;</li>
-            <li>实时路况</li>
+            <li id="roadItem">实时路况
+                <ul>
+                    <li id="showroadBtn">显示路况</li>
+                    <li id="closeroadBtn">关闭路况</li>
+                </ul>
+            </li>
             <li id="traReportBtn">报告路况<img src="img/using.png" /></li>
             <li id="checkAfficheBtn">查看公告</li>
-            <li>事件查询</li>
+            <li id="eventSearchItem">事件查询
+                <ul>
+                    <li id="cirSeaBtn">几何查询</li>
+                    <li id="misSeaBtn">模糊查询<img src="img/using.png" /></li>
+                    <li id="delSeaBtn">重置查询</li>
+                    <li id="hotChartBtn">热力图<img src="img/using.png" /></li>
+                    <li id="carChartBtn">统计图<img src="img/using.png" /></li>
+                </ul>
+            </li>
             <li id="toolA">工具箱
                 <ul>
-                    <li>测距离<img src="img/using.png" /></li>
-                    <li>测面积<img src="img/using.png" /></li>
+                    <li id="lenMeaBtn">测距离<img src="img/using.png" /></li>
+                    <li id="polMeaBtn">测面积<img src="img/using.png" /></li>
+                    <li id="delMeaBtn">清除掉</li>
                     <li>导出图</li>
                 </ul>
             </li>
             <li id="toolB">管理员工具
                 <ul>
-                    <li>视频监控</li>
+                    <li id="videoBtn">视频监控<img src="img/using.png" /></li>
                     <li id="traInfoBtn">路况信息</li>
-                    <li>发布公告</li>
-                    <li>事件添加</li>
-                    <li>事件更新</li>
-                    <li>文档目录</li>
+                    <li id="issueNoticeBtn">发布公告</li>
+                    <li id="addEventBtn">事件添加<img src="img/using.png" /></li>
+                    <li id="updateEventBtn">事件更新<img src="img/using.png" /></li>
+                    <li id="bufferBtn">画缓冲区</li>
+                    <li id="clearbufferBtn">清除结果</li>
+                    <li id="userManageBtn">用户管理</li>
                 </ul>
             </li>
         </ul>
     </div>
+    <!--------------------------- @part 事件更新表 -->
+    <form id="formUpEve" class="formUpEve" action="">
+        <h3>事件更新表</h3>
+        <ul>
+            <li><label for="e00">事件编号：</label><input type="text" id="e00" placeholder="..." /></li>
+            <li><label for="e01">事件类型：</label><input type="text" id="e01" placeholder="..." /></li>
+            <li><label for="e02">事件等级：</label><input type="text" id="e02" placeholder="..." /></li>
+            <li><label for="e03">发生时间：</label><input type="text" id="e03" placeholder="..." /></li>
+            <li><label for="e04">发生地点：</label><input type="text" id="e04" placeholder="..." /></li>
+            <li><label for="e05">车牌号：</label><input type="text" id="e05" placeholder="..." /></li>
+            <li><label for="e06">驾驶员：</label><input type="text" id="e06" placeholder="..." /></li>
+            <li><label for="e07">处理状态：</label><select id="e07">
+                    <option value="0">待处理</option>
+                    <option value="1">处理中</option>
+                    <option value="2">已归档</option>
+                </select></li>
+            <li style="display: none;"><label for="e08">x坐标：</label><input type="text" id="e08" placeholder="..." />
+            </li>
+            <li style="display: none;"><label for="e09">y坐标：</label><input type="text" id="e09" placeholder="..." />
+            </li>
+            <li style="display: none;"><label for="e10">FID：</label><input type="text" id="e10" placeholder="..." />
+            </li>
+            <li class="clearfix"><button id="formUpEveUpdate" type="button">更新</button><button id="formUpEvecancel"
+                                                                                               type="reset">重置</button>
+            </li>
+        </ul>
+    </form>
+    <!--------------------------- @part 热力图 -->
+    <div class="thermodynamicChart">
+        <div id="hotchartContral"><input type="range" id="radius" min="1" max="50" step="1" value="25" /><input
+                    type="range" id="blur" min="1" max="50" step="1" value="25" /></div>
+        <div id="echartsTest" class="echartsTest"></div>
+    </div>
+    <!--------------------------- @part 模糊查询 -->
+    <div class="misSeaBox" id="misSeaBox"><input type="text" autofocus="autofocus" placeholder="..." /><input
+                type="button" value="&#xe632;"></div>
     <!--------------------------- @part 报告路况 -->
     <form class="formTra" id="traReportBox" method="post" action="/road">
         <ul>
@@ -45,21 +97,30 @@
                 <label for="event_time">发送时间</label><input type="datetime-local" id="event_time" name="event_time"  placeholder="..." class="form-control" required/>
             </li>
             <li>
-<!--                <label for="event_describe">事件描述</label><input type="text" id="event_describe" name="event_describe"  placeholder="..." class="form-control" required/>-->
                 <textarea id="event_describe" name="event_describe" class="form-control" placeholder="输入事件描述"></textarea>
             </li>
-            <!--            <li>
-                <label for="event_status">事件状态</label><input type="text" readOnly="readOnly" value ="0" id="event_status" name="event_status"  placeholder="未处理" class="form-control" required/>
-            </li>-->
-            <button type="submit">提交</button>
+            <!--<button type="submit">提交</button>-->
+            <li class="clearfix"><button type="submit">提交</button><button type="reset">重置</button></li>
         </ul>
     </form>
-
-    <!--------------------------- 2.切换图层 -->
+    <!--------------------------- @part 文档目录 -->
+    <form class="formDoc" id="formDocBox" action="">
+        <!-- 开关, 不用管 -->
+        <div class="formDocBtn" id="formDocBtn">&#xe6a3;</div>
+        <ul>
+            <!-- 标题, 不用管 -->
+            <li>地图文档目录</li>
+            <li><input type="checkbox" id="thingLayer" checked ='checked' onclick="changeIncidentLayer()" /><label for="thingLayer">事件</label></li>
+            <li><input type="checkbox" id="cameraLayer" checked ='checked' onclick="changeCameraLayer()" /><label for="cameraLayer">摄像头</label></li>
+            <li><input type="checkbox" id="roadLayer" checked ='checked' onclick="changeStreetLayer()" /><label for="roadLayer">道路</label></li>
+            <li><input type="checkbox" id="communityLayer" checked ='checked' onclick="changeHabitationLayer()" /><label for="communityLayer">居民区</label></li>
+        </ul>
+    </form>
+    <!--------------------------- @part切换图层 -->
     <input class="changeLayer styleA" type="button" value="&#xe622;" />
-    <!--------------------------- 3.经纬度 -->
+    <!--------------------------- @part经纬度 -->
     <div class="coordinate"></div>
-    <!--------------------------- 4.用户 -->
+    <!--------------------------- @part用户 -->
     <% if(locals.islogin){ %>
         <div id="userBox" class="userBox"><img src="img/admin-men.png" alt="">
             <aside class="loginBox">您已登录</aside>
@@ -70,7 +131,7 @@
         </div>
     <% } %>
 
-    <!--------------------------- 5.注册 -->
+    <!--------------------------- @part注册 -->
     <form class="formReg" role="form" action="/reg" method="post">
         <img src="img/pic/earth.png" />
         <ul>
@@ -91,7 +152,7 @@
         </ul>
 
     </form>
-    <!--------------------------- 6.登录 -->
+    <!--------------------------- @part登录 -->
     <form class="formLogin" role="form" action="/login" method="post">
         <img src="img/pic/earth.png" />
         <ul>
@@ -107,5 +168,6 @@
         </ul>
     </form>
 </div>
+<script src="js/echarts.js"></script>
 <script src="js/index.js"></script>
 <%- include mapfooter.ejs %>

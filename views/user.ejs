@@ -1,4 +1,13 @@
-<%- include header.ejs %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap">
+    <link rel="shortcut icon" href="img/favicon.ico"/>
+    <title><%= title %></title>
+</head>
 <body>
 <!-- 如果是登录状态，就进入信息查询页面 -->
 <% if(locals.islogin){%>
@@ -10,7 +19,7 @@
             <form action="/users/search" method="post">
                 姓名：<input type="text" name="s_username" id="s_username" value="" class="text">&nbsp;&nbsp;
                 电话：<input type="text" name="s_telephone" id="s_telephone" value="" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" class="text">&nbsp;&nbsp;
-                <button id="queryinfo" type="submit"title="查询"><i class="iconfont iconchaxun"></i></button>
+                <button id="queryinfo" type="submit"title="查询">查询<i class="iconfont iconchaxun"></i></button>
             </form>
         </div>
     </div>
